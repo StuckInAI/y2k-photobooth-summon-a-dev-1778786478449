@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
 import styles from './PhotoBoothPage.module.css';
+import Header from '@/components/Header/Header';
 import PhotoFrame from '@/components/PhotoFrame/PhotoFrame';
 import ThemePicker from '@/components/ThemePicker/ThemePicker';
 import ActionBar from '@/components/ActionBar/ActionBar';
-import Header from '@/components/Header/Header';
-import { FrameTheme, PhotoSlot } from '@/types';
 import { THEMES } from '@/lib/themes';
+import { PhotoSlot } from '@/types';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 
-const initialSlots: PhotoSlot[] = [
+const INITIAL_SLOTS: PhotoSlot[] = [
   { id: 1, imageData: null },
   { id: 2, imageData: null },
   { id: 3, imageData: null },
@@ -15,67 +16,63 @@ const initialSlots: PhotoSlot[] = [
 ];
 
 export default function PhotoBoothPage() {
-  const [slots, setSlots] = useState<PhotoSlot[]>(initialSlots);
-  const [selectedTheme, setSelectedTheme] = useState<FrameTheme>(THEMES[0]);
+  const [slots, setSlots] = useLocalStorage<PhotoSlot[]>('photobooth-slots', INITIAL_SLOTS);
+  const [selectedThemeId, setSelectedThemeId] = useLocalStorage<string>('photobooth-theme', THEMES[0].id);
   const [isExporting, setIsExporting] = useState(false);
 
+  const selectedTheme = THEMES.find(t => t.id === selectedThemeId) || THEMES[0];
+
   const handleImageUpload = useCallback((slotId: number, imageData: string) => {
-    setSlots(prev =>
-      prev.map(slot => slot.id === slotId ? { ...slot, imageData } : slot)
-    );
-  }, []);
+    setSlots(slots.map(s => s.id === slotId ? { ...s, imageData } : s));
+  }, [slots, setSlots]);
 
   const handleClearSlot = useCallback((slotId: number) => {
-    setSlots(prev =>
-      prev.map(slot => slot.id === slotId ? { ...slot, imageData: null } : slot)
-    );
-  }, []);
+    setSlots(slots.map(s => s.id === slotId ? { ...s, imageData: null } : s));
+  }, [slots, setSlots]);
 
   const handleClearAll = useCallback(() => {
-    setSlots(initialSlots.map(s => ({ ...s, imageData: null })));
-  }, []);
+    setSlots(INITIAL_SLOTS);
+  }, [setSlots]);
 
   const handleExport = useCallback(async () => {
     setIsExporting(true);
     try {
+      const { default: html2canvas } = await import('html2canvas');
       const frameEl = document.getElementById('photo-booth-frame');
       if (!frameEl) return;
-
-      const { default: html2canvas } = await import('html2canvas');
       const canvas = await html2canvas(frameEl, {
-        scale: 3,
         useCORS: true,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: null,
+        scale: 2,
       });
-
       const link = document.createElement('a');
-      link.download = 'y2k-photo-booth.png';
+      link.download = `photobooth-${selectedTheme.id}-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     } catch (err) {
-      console.error('Export failed', err);
+      console.error('Export failed:', err);
     } finally {
       setIsExporting(false);
     }
-  }, []);
+  }, [selectedTheme.id]);
 
   return (
     <div className={styles.page}>
       <Header />
-      <main className={styles.main}>
-        <div className={styles.sidebar}>
+      <div className={styles.main}>
+        <aside className={styles.sidebar}>
           <ThemePicker
             themes={THEMES}
             selectedTheme={selectedTheme}
-            onSelect={setSelectedTheme}
+            onSelect={(theme) => setSelectedThemeId(theme.id)}
           />
           <ActionBar
             onClearAll={handleClearAll}
             onExport={handleExport}
             isExporting={isExporting}
           />
-        </div>
-        <div className={styles.frameWrapper}>
+        </aside>
+        <div className={styles.frameArea}>
           <PhotoFrame
             slots={slots}
             theme={selectedTheme}
@@ -83,7 +80,7 @@ export default function PhotoBoothPage() {
             onClearSlot={handleClearSlot}
           />
         </div>
-      </main>
+      </div>
     </div>
   );
 }
