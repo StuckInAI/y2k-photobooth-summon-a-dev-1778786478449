@@ -1,0 +1,60 @@
+.header {
+  width: 100%;
+  padding: var(--space-lg) var(--space-xl);
+  background: linear-gradient(90deg, rgba(255,179,217,0.3) 0%, rgba(201,184,255,0.3) 50%, rgba(179,229,255,0.3) 100%);
+  border-bottom: 2px dashed var(--color-pink);
+  backdrop-filter: blur(10px);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.titleBlock {
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #FF85C2, #A97FE8, #5BB8FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.sparkleLeft,
+.sparkleRight {
+  display: flex;
+  gap: var(--space-xs);
+  font-size: 1.2rem;
+  animation: twinkle 2s infinite alternate;
+}
+
+.sparkleRight {
+  animation-delay: 0.5s;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.6; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1.05); }
+}
+
+@media (max-width: 600px) {
+  .title { font-size: 1.5rem; }
+  .sparkleLeft, .sparkleRight { display: none; }
+}

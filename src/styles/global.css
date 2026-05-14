@@ -1,0 +1,82 @@
+:root {
+  /* Pastel Y2K Color Palette */
+  --color-pink: #FFB3D9;
+  --color-pink-light: #FFD6EC;
+  --color-pink-deep: #FF85C2;
+  --color-lavender: #C9B8FF;
+  --color-lavender-light: #E4DAFF;
+  --color-mint: #B3F0E0;
+  --color-mint-light: #D6FAF0;
+  --color-sky: #B3E5FF;
+  --color-sky-light: #D6F2FF;
+  --color-yellow: #FFF0B3;
+  --color-yellow-deep: #FFE066;
+  --color-peach: #FFD6B3;
+  --color-coral: #FFB3A0;
+  --color-white: #FFFFFF;
+  --color-cream: #FFF9F9;
+  --color-text: #5A3E6B;
+  --color-text-light: #9B7EC0;
+  --color-border: #F0D6F5;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Typography */
+  --font-display: 'Pacifico', cursive;
+  --font-body: 'Quicksand', sans-serif;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 24px rgba(200, 150, 255, 0.15);
+  --shadow-glow: 0 0 20px rgba(255, 179, 217, 0.4);
+  --shadow-card: 0 8px 32px rgba(150, 100, 200, 0.12);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

@@ -1,0 +1,24 @@
+.decorRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  padding: var(--space-xs) 0;
+}
+
+.item {
+  display: inline-block;
+  animation: floatBounce 3s ease-in-out infinite alternate;
+  user-select: none;
+  line-height: 1;
+}
+
+@keyframes floatBounce {
+  from {
+    transform: translateY(0px) rotate(-3deg) scale(1);
+  }
+  to {
+    transform: translateY(-4px) rotate(3deg) scale(1.05);
+  }
+}

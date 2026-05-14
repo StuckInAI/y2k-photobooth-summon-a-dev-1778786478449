@@ -1,0 +1,66 @@
+.container {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-card);
+  border: 2px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+  text-align: center;
+}
+
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.themeBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: left;
+  position: relative;
+}
+
+.themeBtn:hover {
+  transform: translateX(3px);
+  box-shadow: var(--shadow-soft);
+}
+
+.selected {
+  box-shadow: var(--shadow-soft);
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.themeName {
+  flex: 1;
+}
+
+.checkmark {
+  color: #5A3E6B;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
